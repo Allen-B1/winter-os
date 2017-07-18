@@ -3,10 +3,19 @@
   bottom: 0;
   left: 0;
   right: 0;
-  min-height: 56px;
+  padding:8px;
   background: #90CAF9;
 }
 
 body {
   background: #E3F2FD;
 }
+
+.winter-fab {
+  display: inline-block;
+  border-radius: 50px;
+  height: 16px;
+  width: 16px;
+  box-shadow:0 0 2px rgba(0,0,0,0.14);
+}
+
