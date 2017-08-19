@@ -19,8 +19,7 @@ body {
   border: 0;
   display: inline-block;
   border-radius: 50px;
-  height: 24px;
-  width: 24px;
+  padding: 16px;
   box-shadow:0 0 4px rgba(0,0,0,0.3);
   background: #2196F3;
   text-align: center;
@@ -29,3 +28,15 @@ body {
   outline: 0;
 }
 
+.winter-button {
+  padding: 16px;
+  font-size: 13px;
+  color: #fff;
+  background: #2196F3;
+  border: 0;
+  box-shadow:0 0 4px rgba(0,0,0,0.3);
+  text-align: center;
+  padding: 4px;
+  cursor: pointer;
+  outline: 0
+}
