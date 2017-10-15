@@ -39,6 +39,25 @@ Winter.App.prototype.close = function() {
     this.content.remove();
 }
 
+Winter.WebApp = function(name, about, url) {
+    Winter.App.call(this, name, about);
+    this.frame = document.createElement("iframe");
+    this.frame.style.border = 0;
+    this.content.appendChild(this.frame);
+    this.frame.src = url;
+    this.frame.width = 200;
+    this.frame.height = 200;
+}
+Winter.WebApp.prototype = Object.create(Winter.App.prototype);
+Winter.WebApp.prototype.setWidth = function(w) {
+    Winter.App.setWidth.call(this, w);
+    this.frame.width = w;
+}
+Winter.WebApp.prototype.setHeight = function(h) {
+    Winter.App.setHeight.call(this, h);
+    this.frame.width = h;
+}
+
 Winter.Apps = {};
 Winter.Apps.Browser = function(url) {
     this.app = new Winter.App("Browser", "Browse the web");
