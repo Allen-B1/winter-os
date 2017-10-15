@@ -42,11 +42,16 @@ body {
 }
 
 .winter-window {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    background: #EEE;
-    min-width: 200px;
-    min-height: 200px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  background: #eee;
+  min-width: 200px;
+  min-height: 200px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.winter-window-title {
+  background: #607d8b;
+  color: #fff;
 }
