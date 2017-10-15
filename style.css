@@ -3,7 +3,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding:10px;
+  padding:0;
   background: #90caf9;
   box-shadow:0 0 4px rgba(0,0,0,0.3);
 }
@@ -41,6 +41,16 @@ body {
   outline: 0
 }
 
+.winter-panel-button {
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+    padding: 8px 16px;
+}
+.winter-panel-button:hover {
+    background: rgba(0,0,0,0.2);
+}
+
 .winter-window {
   position: fixed;
   top: 12px;
@@ -52,7 +62,15 @@ body {
 }
 
 .winter-window-title {
+  cursor: pointer;
   background: #607d8b;
   color: #fff;
-  padding: 8px;
+  padding: 12px 16px;
+}
+.winter-window-title-close {
+    float: right;
+    height: 100%;
+}
+.winter-window-title-close:hover {
+    background: rgba(255,255,255,0.2);
 }
