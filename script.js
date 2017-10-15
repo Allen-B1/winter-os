@@ -4,6 +4,7 @@ Winter.CreateWindow = function(title) {
   win.classList.add("winter-window");
   var titlebar = document.createElement("div");
   titlebar.classList.add("winter-window-title");
+  titlebar.innerHTML = title;
   win.appendChild(titlebar);
   document.body.appendChild(win);
 }
