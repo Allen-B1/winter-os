@@ -21,7 +21,9 @@ Winter.CreateWindow = function(title) {
         win.css("left",x + "px");
     }
 
-    win.draggable();
+    win.draggable({
+        handle: titlebar
+    });
 
     titlebar.on("touchmove", function(e) {
         move(e.pageX, e.pageY);
@@ -42,6 +44,9 @@ Winter.App.prototype.setHeight = function(h) {
 }
 Winter.App.prototype.close = function() {
     this.content.remove();
+}
+Winter.App.prototype.titlecolor = function(color) {
+    this.content.find(".winter-window-title").css("background", color);
 }
 
 Winter.WebApp = function(name, about, url) {
@@ -66,12 +71,15 @@ Winter.WebApp.prototype.setHeight = function(h) {
 Winter.Apps = {};
 Winter.Apps.Browser = function(url) {
     this.app = new Winter.App("Browser", "Browse the web");
+    this.app.titlecolor("#455a64");
     this.address = $("<input type=\"text\"/>");
     this.address.val("https://start.duckduckgo.com/");
     this.address.css("display", "block");
     this.address.css("width", "100%");
     this.address.css("padding", "8px");
     this.address.css("boxSizing", "border-box");
+    this.address.css("color", "#fff");  
+    this.address.css("background", "#607d8b");
     var self = this;
     this.address.keypress(function(e) {
         if(e.keyCode == 13)
@@ -84,21 +92,23 @@ Winter.Apps.Browser = function(url) {
     this.frame.appendTo(this.app.content);
     this.frame.attr("src", "https://start.duckduckgo.com/");
     this.frame.attr("width", "500px");
-    this.frame.attr("height", "500px");
+    this.frame.attr("height", "400px");
     this.app.setWidth(500);
-    this.app.setHeight(500);
+    this.app.setHeight(400);
 }
 
 Winter.Apps.Browser.prototype.goto = function(query) {
     if(query.indexOf("http") == 0)
-        this.frame.src = query;
+        this.frame.attr("src", query);
     else
-        this.frame.src = "https://duckduckgo.com/?q=" + query;
+        this.frame.attr("src", "https://duckduckgo.com/?q=" + query);
 }
 
 Winter.Apps[2048] = function() {
     this.app = new Winter.WebApp("2048", "1024 clone", "https://gabrielecirulli.github.io/2048/");
-    this.app.setWidth(300);
+    this.app.setWidth(350);
+    this.app.setHeight(350);
+    this.app.titlecolor("#fb8c00");
 }
 
 $(document).ready(function() {
