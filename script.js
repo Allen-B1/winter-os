@@ -17,18 +17,15 @@ Winter.CreateWindow = function(title) {
     win.appendTo($(document.body));
 
     function move(x, y) {
-        win.css("top", y - 24 + "px");
-        win.css("left",x - 32 + "px");
+        win.css("top", y + "px");
+        win.css("left",x + "px");
     }
 
-    titlebar.mousemove(function(e) {
-        if(Winter.mousedown == 1) {
-            move(e.clientX, e.clientY);
-        }
-    });
+    win.draggable();
 
     titlebar.on("touchmove", function(e) {
         move(e.pageX, e.pageY);
+        e.preventDefault();
     });
     return win;
 }
@@ -105,10 +102,5 @@ Winter.Apps[2048] = function() {
 }
 
 $(document).ready(function() {
-    $(document.body).mousedown(function() { 
-        Winter.mousedown = 1;
-    });
-    $(document.body).mouseup(function() {
-        Winter.mousedown = 0;
-    });
+
 });
