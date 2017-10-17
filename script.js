@@ -3,6 +3,7 @@ Winter.mousedown = 0;
 Winter.CreateWindow = function(title) {
     var win = $("<div/>");
     win.addClass("winter-window");
+    win.resizable();
     var titlebar = $("<div/>");
     titlebar.addClass("winter-window-title");
     titlebar.html(title);
@@ -31,15 +32,14 @@ Winter.CreateWindow = function(title) {
     });
     return win;
 }
-Winter.App = function(name, about) {
+Winter.App = function(name) {
     this.name = name;
-    this.about = about;
     this.content = Winter.CreateWindow(name);
 }
-Winter.App.prototype.setWidth = function(w) {
+Winter.App.prototype.setMinWidth = function(w) {
     this.content.css("minWidth", w + "px");
 }
-Winter.App.prototype.setHeight = function(h) {
+Winter.App.prototype.setMinHeight = function(h) {
     this.content.css("minHeight", h + "px");
 }
 Winter.App.prototype.close = function() {
@@ -49,28 +49,31 @@ Winter.App.prototype.titlecolor = function(color) {
     this.content.find(".winter-window-title").css("background", color);
 }
 
-Winter.WebApp = function(name, about, url) {
-    Winter.App.call(this, name, about);
+Winter.WebApp = function(name, url) {
+    Winter.App.call(this, name);
     this.frame = $("<iframe/>");
     this.frame.css("border", 0);
     this.frame.appendTo(this.content);
     this.frame.attr("src", url);
-    this.frame.attr("width", 200);
-    this.frame.attr("height", 200);
+    var self = this;
+    this.content.on( "resize", function( event, ui ) {
+        self.frame.attr("width", ui.size.width);
+        self.frame.attr("height", ui.size.height - self.content.find(".winter-window-title").innerHeight());
+    });
 }
 Winter.WebApp.prototype = Object.create(Winter.App.prototype);
-Winter.WebApp.prototype.setWidth = function(w) {
-    Winter.App.prototype.setWidth.call(this, w);
-    this.frame.attr("width", w);
+Winter.WebApp.prototype.setMinWidth = function(w) {
+    Winter.App.prototype.setMinWidth.call(this, w);
+    this.frame.css("minWidth", w);
 }
-Winter.WebApp.prototype.setHeight = function(h) {
-    Winter.App.prototype.setHeight.call(this, h);
-    this.frame.attr("height", h);
+Winter.WebApp.prototype.setMinHeight = function(h) {
+    Winter.App.prototype.setMinHeight.call(this, h);
+    this.frame.css("minHeight", h - this.content.find(".winter-window-title").innerHeight());
 }
 
 Winter.Apps = {};
 Winter.Apps.Browser = function(url) {
-    this.app = new Winter.App("Browser", "Browse the web");
+    this.app = new Winter.App("Browser");
     this.app.titlecolor("#455a64");
     this.address = $("<input type=\"text\"/>");
     this.address.val("https://start.duckduckgo.com/");
@@ -93,8 +96,8 @@ Winter.Apps.Browser = function(url) {
     this.frame.attr("src", "https://start.duckduckgo.com/");
     this.frame.attr("width", "500px");
     this.frame.attr("height", "400px");
-    this.app.setWidth(500);
-    this.app.setHeight(400);
+    this.app.setMinWidth(500);
+    this.app.setMinHeight(400);
 }
 
 Winter.Apps.Browser.prototype.goto = function(query) {
@@ -105,10 +108,14 @@ Winter.Apps.Browser.prototype.goto = function(query) {
 }
 
 Winter.Apps[2048] = function() {
-    this.app = new Winter.WebApp("2048", "1024 clone", "https://gabrielecirulli.github.io/2048/");
-    this.app.setWidth(350);
-    this.app.setHeight(350);
+    this.app = new Winter.WebApp("2048", "https://gabrielecirulli.github.io/2048/");
+    this.app.setMinWidth(350);
+    this.app.setMinHeight(350);
     this.app.titlecolor("#fb8c00");
+}
+
+Winter.Apps.Maps = function() {
+    this.app = new Winter.WebApp("Maps");
 }
 
 $(document).ready(function() {
