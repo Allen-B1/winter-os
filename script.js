@@ -6,7 +6,10 @@ Winter.CreateWindow = function(title) {
     win.resizable();
     var titlebar = $("<div/>");
     titlebar.addClass("winter-window-title");
-    titlebar.html(title);
+    var titletext = $("<span/>");
+    titletext.addClass("winter-window-title-text");
+    titletext.html(title);
+    titletext.appendTo(titlebar);
     var closebtn = $("<div/>");
     closebtn.addClass("winter-window-title-close");
     closebtn.html("&times;");
@@ -64,11 +67,11 @@ Winter.WebApp = function(name, url) {
 Winter.WebApp.prototype = Object.create(Winter.App.prototype);
 Winter.WebApp.prototype.setMinWidth = function(w) {
     Winter.App.prototype.setMinWidth.call(this, w);
-    this.frame.css("minWidth", w);
+    this.frame.css("minWidth", w + "px");
 }
 Winter.WebApp.prototype.setMinHeight = function(h) {
     Winter.App.prototype.setMinHeight.call(this, h);
-    this.frame.css("minHeight", h - this.content.find(".winter-window-title").innerHeight());
+    this.frame.css("minHeight", h - this.content.find(".winter-window-title").innerHeight() + "px");
 }
 
 Winter.Apps = {};
@@ -98,6 +101,12 @@ Winter.Apps.Browser = function(url) {
     this.frame.attr("height", "400px");
     this.app.setMinWidth(500);
     this.app.setMinHeight(400);
+    this.frame.css("minWidth", 500 + "px");
+    this.frame.css("minHeight", 400 - this.app.content.find(".winter-window-title").innerHeight() - this.app.content.find("input").innerHeight() + "px");
+    this.app.content.on( "resize", function( event, ui ) {
+        self.frame.attr("width", ui.size.width);
+        self.frame.attr("height", ui.size.height - self.app.content.find(".winter-window-title").innerHeight() - self.app.content.find("input").innerHeight());
+    });
 }
 
 Winter.Apps.Browser.prototype.goto = function(query) {
@@ -119,5 +128,26 @@ Winter.Apps.Maps = function() {
 }
 
 $(document).ready(function() {
-
+// start screen
+    var screen = $("<div/>");
+    screen.css("width", "100%");
+    screen.css("height", "100%");
+    screen.css("top", "0");
+    screen.css("left", "0");
+    screen.css("position", "fixed");
+    screen.css("background", "#03a9f4");
+    screen.css("padding","0");
+    var text = $("<div/>");
+    text.css("font-size", "50px");
+    text.css("line-height", window.innerHeight + "px");
+    text.css("text-align", "center");
+    text.css("white-space", "nowrap");
+    text.css("color", "#fff");
+    text.css("height", "100%");
+    text.appendTo(screen);
+    text.html("Winter OS");
+    screen.appendTo(document.body);
+    setTimeout(function() {
+        screen.fadeOut();
+    }, 1000);
 });

@@ -66,12 +66,18 @@ body {
   cursor: pointer;
   background: #607d8b;
   color: #fff;
+  user-select: none;
+  padding: 0;
+}
+.winter-window-title-text {
   padding: 12px 16px;
+  display: inline-block;
 }
 .winter-window-title-close {
     float: right;
-    height: 100%;
+    padding: 12px 16px;
+    display: block;
 }
 .winter-window-title-close:hover {
-    background: rgba(255,255,255,0.2);
+    background: #f44336;
 }
