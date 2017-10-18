@@ -26,7 +26,13 @@ Winter.CreateWindow = function(title) {
     }
 
     win.draggable({
-        handle: titlebar
+        handle: titlebar,
+        start: function() {
+            win.css("zIndex", "3");
+        },
+        stop: function() {
+            win.css("zIndex", "2");
+        }
     });
 
     titlebar.on("touchmove", function(e) {
