@@ -84,42 +84,74 @@ Winter.Apps = {};
 Winter.Apps.Browser = function(url) {
     this.app = new Winter.App("Browser");
     this.app.titlecolor("#455a64");
+    this.toolbar = $("<div/>");
+    this.toolbar.css("background", "#607d8b");
+    this.toolbar.appendTo(this.app.content);
     this.address = $("<input type=\"text\"/>");
     this.address.val("https://start.duckduckgo.com/");
-    this.address.css("display", "block");
-    this.address.css("width", "100%");
+    this.address.css("display", "inline-block");
+    this.address.css("width", "80%");
     this.address.css("padding", "8px");
     this.address.css("boxSizing", "border-box");
     this.address.css("color", "#fff");  
     this.address.css("background", "#607d8b");
+    this.address.css("outline", "0");
     var self = this;
     this.address.keypress(function(e) {
         if(e.keyCode == 13)
             self.goto(this.value);
     });
     this.address.css("border", 0);
-    this.address.appendTo(this.app.content);
+    this.address.appendTo(this.toolbar);
+
+    this.backbtn = $("<button/>");
+    this.backbtn.addClass("winter-toolbar-button");
+    this.backbtn.css("float", "right");
+    this.backbtn.css("color", "#fff");
+    this.backbtn.html("&#9664;");
+    this.backbtn.click(function() {
+        try {
+            self.frame[0].contentWindow.history.back();
+        } catch(err) {
+            console.error("Unable to go back: " + err);
+        }
+    });
+    this.backbtn.appendTo(this.toolbar);
+
     this.frame = $("<iframe/>");
     this.frame.css("border", "0");
     this.frame.appendTo(this.app.content);
     this.frame.attr("src", "https://start.duckduckgo.com/");
     this.frame.attr("width", "500px");
     this.frame.attr("height", "400px");
+
     this.app.setMinWidth(500);
     this.app.setMinHeight(400);
     this.frame.css("minWidth", 500 + "px");
     this.frame.css("minHeight", 400 - this.app.content.find(".winter-window-title").innerHeight() - this.app.content.find("input").innerHeight() + "px");
+
     this.app.content.on( "resize", function( event, ui ) {
         self.frame.attr("width", ui.size.width);
         self.frame.attr("height", ui.size.height - self.app.content.find(".winter-window-title").innerHeight() - self.app.content.find("input").innerHeight());
     });
+
+    this.frame.on("load", function load() {
+        try {
+            self.address.val(this.contentWindow.location.href);
+        } catch(err) {
+            console.error("Unable to get page url: " + err);
+        }
+    });
 }
 
 Winter.Apps.Browser.prototype.goto = function(query) {
+    var url = "";
     if(query.indexOf("http") == 0)
-        this.frame.attr("src", query);
+        url = query;
     else
-        this.frame.attr("src", "https://duckduckgo.com/?q=" + query);
+        url = "https://duckduckgo.com/?q=" + query;
+    this.frame.attr("src", url);
+    this.address.val(url);
 }
 
 Winter.Apps[2048] = function() {
@@ -134,26 +166,4 @@ Winter.Apps.Maps = function() {
 }
 
 $(document).ready(function() {
-// start screen
-    var screen = $("<div/>");
-    screen.css("width", "100%");
-    screen.css("height", "100%");
-    screen.css("top", "0");
-    screen.css("left", "0");
-    screen.css("position", "fixed");
-    screen.css("background", "#03a9f4");
-    screen.css("padding","0");
-    var text = $("<div/>");
-    text.css("font-size", "50px");
-    text.css("line-height", window.innerHeight + "px");
-    text.css("text-align", "center");
-    text.css("white-space", "nowrap");
-    text.css("color", "#fff");
-    text.css("height", "100%");
-    text.appendTo(screen);
-    text.html("Winter OS");
-    screen.appendTo(document.body);
-    setTimeout(function() {
-        screen.fadeOut();
-    }, 1000);
 });
