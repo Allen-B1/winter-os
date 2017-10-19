@@ -106,9 +106,10 @@ Winter.Apps.Browser = function(url) {
 
     this.backbtn = $("<button/>");
     this.backbtn.addClass("winter-toolbar-button");
+    this.backbtn.addClass("material-icons");
     this.backbtn.css("float", "right");
     this.backbtn.css("color", "#fff");
-    this.backbtn.html("&#9664;");
+    this.backbtn.html("&#xe5c4;");
     this.backbtn.click(function() {
         try {
             self.frame[0].contentWindow.history.back();
