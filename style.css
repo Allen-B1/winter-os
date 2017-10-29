@@ -54,7 +54,7 @@ body {
     background: rgba(0,0,0,0.2);
 }
 
-.winter-panel-button {
+.winter-panel-button, .winter-panel-item {
     border: 0;
     cursor: pointer;
     background: transparent;

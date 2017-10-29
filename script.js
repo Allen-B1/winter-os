@@ -174,5 +174,31 @@ Winter.Apps.Maps = function() {
     this.app = new Winter.WebApp("Maps");
 }
 
+Winter.X = {};
+Winter.X.TimeItem = function() {
+    var options = {
+        hour: 'numeric',    
+        minute: 'numeric',
+        hour12: true
+    };
+    $(".winter-time").html(new Date().toLocaleString('en-US', options));
+}
+
+Winter.X.ShowTime = function() {
+    var options = {
+        hour: 'numeric',    
+        minute: 'numeric',
+        hour12: true
+    };
+
+    var date_options = {
+        weekday: 'short', year: 'numeric', month: 'long', day: 'numeric'
+    };
+    date = new Date();
+    alert(date.toLocaleString("en-US", date_options) + "\n" + date.toLocaleString("en-US", options));
+}
+
 $(document).ready(function() {
+    Winter.X.TimeItem();
+    setInterval(Winter.X.TimeItem, 1000);
 });
