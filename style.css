@@ -1,16 +1,16 @@
 #winter-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding:0;
-  background: #90caf9;
-  box-shadow:0 0 4px rgba(0,0,0,0.3);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding:0;
+    background: #90caf9;
+    box-shadow:0 0 4px rgba(0,0,0,0.3);
 }
 
 body {
-  background: #e3f2fD;
-  font-family: sans-serif;
+    background: #e3f2fD;
+    font-family: Roboto, sans-serif;
     font-size: 14px;
 }
 
@@ -82,16 +82,17 @@ body {
   color: #fff;
   user-select: none;
   padding: 0;
-  font-size: 16px;
+  font-size: 12px;
 }
 .winter-window-title-text {
-  padding: 12px 16px;
+  padding: 8px 12px;
   display: inline-block;
 }
 .winter-window-title-close {
     float: right;
-    padding: 12px 16px;
+    padding: 8px 12px;
     display: block;
+    font-size: 16px;
 }
 .winter-window-title-close:hover {
     background: #f44336;

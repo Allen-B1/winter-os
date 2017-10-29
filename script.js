@@ -12,7 +12,8 @@ Winter.CreateWindow = function(title) {
     titletext.appendTo(titlebar);
     var closebtn = $("<div/>");
     closebtn.addClass("winter-window-title-close");
-    closebtn.html("&times;");
+    closebtn.addClass("material-icons");
+    closebtn.html("&#xe5cd;");
     closebtn.appendTo(titlebar);
     closebtn.click(function() {
         setTimeout(function() {win.remove();}, 100);
@@ -55,8 +56,11 @@ Winter.App.prototype.close = function() {
     this.content.remove();
 }
 Winter.App.prototype.titlecolor = function(color) {
-    this.content.find(".winter-window-title").css("background", color);
+    this.titlebar.css("background", color);
 }
+Winter.App.prototype.__defineGetter__("titlebar", function() {
+    return this.content.find(".winter-window-title");
+});
 
 Winter.WebApp = function(name, url) {
     Winter.App.call(this, name);
@@ -67,7 +71,7 @@ Winter.WebApp = function(name, url) {
     var self = this;
     this.content.on( "resize", function( event, ui ) {
         self.frame.attr("width", ui.size.width);
-        self.frame.attr("height", ui.size.height - self.content.find(".winter-window-title").innerHeight());
+        self.frame.attr("height", ui.size.height - self.titlebar.innerHeight());
     });
 }
 Winter.WebApp.prototype = Object.create(Winter.App.prototype);
@@ -77,7 +81,7 @@ Winter.WebApp.prototype.setMinWidth = function(w) {
 }
 Winter.WebApp.prototype.setMinHeight = function(h) {
     Winter.App.prototype.setMinHeight.call(this, h);
-    this.frame.css("minHeight", h - this.content.find(".winter-window-title").innerHeight() + "px");
+    this.frame.css("minHeight", h - this.titlebar.innerHeight() + "px");
 }
 
 Winter.Apps = {};
@@ -91,10 +95,10 @@ Winter.Apps.Browser = function(url) {
     this.address.val("https://start.duckduckgo.com/");
     this.address.css("display", "inline-block");
     this.address.css("width", "80%");
-    this.address.css("padding", "8px");
-    this.address.css("boxSizing", "border-box");
     this.address.css("color", "#fff");  
-    this.address.css("background", "#607d8b");
+    this.address.css("background", "transparent");
+    this.address.css("padding", "8px 12px");
+    this.address.css("font-size", "14px");
     this.address.css("outline", "0");
     var self = this;
     this.address.keypress(function(e) {
@@ -110,6 +114,10 @@ Winter.Apps.Browser = function(url) {
     this.backbtn.css("float", "right");
     this.backbtn.css("color", "#fff");
     this.backbtn.html("&#xe5c4;");
+    
+    this.backbtn.css("padding", "8px 12px");
+    this.backbtn.css("font-size", "19px");
+
     this.backbtn.click(function() {
         try {
             self.frame[0].contentWindow.history.back();
